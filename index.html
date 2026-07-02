@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Матослов — толковый словарик самых немилых слов</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ══════ Тетрадный лист ══════ -->
+  <div class="page">
+
+    <!-- кусочки скотча, которыми «приклеен» лист -->
+    <span class="tape tape-left" aria-hidden="true"></span>
+    <span class="tape tape-right" aria-hidden="true"></span>
+
+    <!-- ══════ Обложка-шапка ══════ -->
+    <header class="masthead">
+      <p class="masthead-top">толковый словарик русского мата</p>
+      <h1 class="logo">Матослов <span class="logo-emoji" id="logoEmoji">🦄</span></h1>
+      <p class="masthead-bottom">
+        более <span id="wordCount">15</span> слов · проверено котиками
+      </p>
+    </header>
+
+    <p class="load-error" id="loadError" hidden>
+      Не получилось загрузить словарик 🥺<br>
+      <span class="empty-sub">открой сайт через сервер (например, «Go Live» в VS Code
+      или <code>python -m http.server</code>), а не двойным кликом по файлу</span>
+    </p>
+
+    <!-- ══════ Слово дня ══════ -->
+    <section class="daily" aria-label="Слово дня">
+      <div class="daily-head">
+        <span class="daily-label">слово дня · <span id="todayDate"></span></span>
+        <button class="dice-btn" id="diceBtn" type="button">
+          <span class="dice" id="dice">🎲</span> другое слово
+        </button>
+      </div>
+
+      <article class="entry entry-daily">
+        <h2 class="entry-word" id="heroWord">…</h2>
+        <p class="entry-grammar">
+          <span class="entry-pos" id="heroPos"></span>
+          <span class="entry-tag" id="heroTag"></span>
+        </p>
+        <p class="entry-meaning" id="heroMeaning"></p>
+        <ol class="entry-examples" id="heroExamples"></ol>
+        <div class="votes" id="heroVotes">
+          <button class="vote like" type="button" aria-label="Нравится">👍 <span class="cnt">0</span></button>
+          <button class="vote dislike" type="button" aria-label="Не нравится">👎 <span class="cnt">0</span></button>
+        </div>
+      </article>
+    </section>
+
+    <!-- ══════ Поиск ══════ -->
+    <section class="search-wrap" aria-label="Поиск">
+      <div class="search-box">
+        <span class="search-icon" aria-hidden="true">🔍</span>
+        <input type="text" id="searchInput" class="search-input"
+               placeholder="найди своё любимое словечко…"
+               autocomplete="off" spellcheck="false"
+               aria-label="Поиск по словарю">
+      </div>
+    </section>
+
+    <!-- ══════ Словарь: статьи по алфавиту ══════ -->
+    <section class="dict" aria-label="Все слова" id="dictList"></section>
+
+    <p class="empty-state" id="emptyState" hidden>
+      Ой-ой… такого словечка у нас пока нет 🥺<br>
+      <span class="empty-sub">но мы обязательно его выучим!</span>
+    </p>
+
+    <footer class="footer">
+      <p>сделано с любовью, блёстками и лёгким недосыпом 🧁</p>
+    </footer>
+
+  </div><!-- /.page -->
+
+  <!-- ══════ Модальное окно ══════ -->
+  <div class="modal-overlay" id="modalOverlay" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalWord">
+      <button class="modal-close" id="modalClose" type="button" aria-label="Закрыть">✕</button>
+      <h3 class="entry-word modal-word" id="modalWord"></h3>
+      <p class="entry-grammar">
+        <span class="entry-pos" id="modalPos"></span>
+        <span class="entry-tag" id="modalTag"></span>
+      </p>
+      <p class="entry-meaning" id="modalMeaning"></p>
+      <ol class="entry-examples" id="modalExamples"></ol>
+
+      <div class="votes" id="modalVotes">
+        <button class="vote like" type="button" aria-label="Нравится">👍 <span class="cnt">0</span></button>
+        <button class="vote dislike" type="button" aria-label="Не нравится">👎 <span class="cnt">0</span></button>
+      </div>
+
+      <div class="comments">
+        <div class="comments-title">комментарии <span class="comments-count" id="commentsCount"></span></div>
+        <ul class="comments-list" id="commentsList"></ul>
+        <div class="comment-add">
+          <input type="text" id="commentInput" class="comment-input"
+                 placeholder="напиши что-нибудь милое…" maxlength="140"
+                 autocomplete="off" aria-label="Текст комментария">
+          <button type="button" id="commentSend" class="comment-send">✎</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
